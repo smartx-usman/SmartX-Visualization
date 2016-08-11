@@ -1,0 +1,41 @@
+var MongoClient = require('mongodb').MongoClient;
+var Db = require('mongodb').Db;
+var Connection = require('mongodb').Connection;
+var Server = require('mongodb').Server;
+var BSON = require('mongodb').BSON;
+var ObjectID = require('mongodb').ObjectID;
+var dateFormat  = require('dateformat');
+
+ArticleProvider = function() {
+  //this.db= new Db('node-mongo-blog', new Server(host, port, {auto_reconnect: true}, {}));
+ // MongoClient.connect('mongodb://127.0.0.1:27017/smartxdb', function(err, db) {
+//			if(err) throw err;});
+  //this.db.open(function(){});
+};
+
+//findAll
+	ArticleProvider.prototype.findAll = function(callback) {
+    	//this.getCollection(function(error, article_collection) {
+      	//if( error ) callback(error)
+      	//else {
+	MongoClient.connect('mongodb://127.0.0.1:27017/smartxdb', function(err, db){
+        var currentTime = new Date();
+        dateFormat(currentTime.setMinutes(currentTime.getMinutes() - 2));
+        currentTime.setHours(currentTime.getHours()+9);
+        console.log(currentTime);
+	// Locate all the entries using find
+	var collection = db.collection("resourcelevel");
+
+        collection.find({timestamp: {$gte: currentTime}},{box: true, timestamp: true, _id: false}).sort({timestamp: -1}).toArray(function(err, results) {
+          console.log(results);
+          		 	
+
+	  callback (null,results);	
+	 // if( error ) callback(error)
+         // else callback(null, results)
+        });
+      //}
+    });
+};
+
+exports.ArticleProvider = ArticleProvider;

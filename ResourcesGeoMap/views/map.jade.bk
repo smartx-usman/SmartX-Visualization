@@ -1,0 +1,28 @@
+doctype html
+html(lang="en")
+head
+  title OF@TEIN Resource Map
+  link(rel='stylesheet', href='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css')
+  link(href='stylesheets/map.css', rel='stylesheet')
+  script(src='http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js')
+body
+  h1 OF@TEIN Boxes Status
+  div#map
+    script
+      console.log("hi")
+      // initialize the map
+      var map = L.map('map').setView([42.35, -71.08], 13)
+      // load a tile layer
+      L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png',
+      {
+      attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+      maxZoom: 17,
+      minZoom: 9
+      }).addTo(map)
+p
+  | Text can be included in a number of
+  | different ways.
+p.
+  This way is shortest if you need big
+  blocks of text spanning multiple
+	

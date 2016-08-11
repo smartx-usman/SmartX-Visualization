@@ -1,0 +1,413 @@
+html
+  head
+    meta(content='300', http-equiv='refresh')
+    |     
+    title OF@TEIN Resources!
+    |   
+    |     
+    link(rel='stylesheet', href='stylesheets/leaflet.css')
+    |   
+    |     
+    script(type='text/javascript', src='javascripts/leaflet.js')
+    |   
+    |     
+    style.
+      #map{ height: 100% }
+  |   
+  body
+    #map
+    |   
+    |     
+    script.
+      //Boxes
+      markers = [
+      {
+      "name": "SmartX-Ops-Tower",
+      "url": "",
+      "color": "green",
+      "fillcolor": "#56ff00",
+      "lat": 36.159545,
+      "lng": 129.852601
+      },
+      {
+      "name": "SmartX-BPlus-GIST",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 35.159545,
+      "lng": 126.852601
+      },
+      {
+      "name": "SmartX-BPlus-TEST",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 37.566535,
+      "lng": 126.977969
+      },
+      {
+      "name": "SmartX-BPlus-PKS",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 33.729388,
+      "lng": 73.093146
+      },
+      {
+      "name": "SmartX-BPlus-PH",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 14.599512,
+      "lng": 120.984219
+      },
+      {
+      "name": "Smartx-BPlus-ID",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": -6.208763,
+      "lng": 106.845599
+      },
+      {
+      "name": "SmartX-BPlus-TH",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 13.756331,
+      "lng": 100.501765
+      },
+      {
+      "name": "SmartX-BPlus-MYREN",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 2.879037,
+      "lng": 101.681900
+      },
+      {
+      "name": "SmartX-BPlus-MY",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 5.973038,
+      "lng": 102.205811
+      },
+      {
+      "name": "SmartX-BPlus-VN",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 21.027764,
+      "lng": 105.83416
+      },
+      {
+      "name": "SmartX-BPlus-TW",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 23.348979,
+      "lng": 121.069336
+      },
+      {
+      "name": "SmartX-BPlus-IN",
+      "url": "",
+      "color": "red",
+      "fillcolor": "#f03",
+      "lat": 21.643812,
+      "lng": 78.881836
+      }
+      ];
+      // initialize the map
+      var map = L.map('map').setView([19.703242, 105.029297], 5);
+      // load a tile layer
+      L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      {
+      attribution: 'Tiles by <a href="http://mapc.org">MAPC</a>, Data by <a href="http://mass.gov/mgis">MassGIS</a>',
+      maxZoom: 17,
+      minZoom: 4
+      }).addTo(map);
+      var boxname;
+      // Receive Active Boxes List
+      var lBox = !{boxes};
+      var pLink = !{plinks};
+      for (i=0; i<markers.length; i++)
+      {
+      boxname=markers[i].name;
+      for (j=0; j<lBox.length; j++)
+      {
+      console.log()
+      if (lBox[j]==boxname)
+      {
+      console.log(j+ ' : '+lBox[j]);
+      markers[i].color='Green';
+      markers[i].fillcolor='#56ff00';
+      }
+      }
+      var circle = L.circle([markers[i].lat, markers[i].lng], 80000, {
+      color: markers[i].color,
+      fillColor: markers[i].fillcolor,
+      fillOpacity: 0.5
+      }).bindPopup( '<a href="' + markers[i].url + '" target="_blank">' + markers[i].name + '</a>' )
+      .addTo(map);
+      }
+      for (i=0; i<pLink.length; i++)
+      {
+      if(pLink[i].source=='103.22.221.55')
+      {
+      console.log(pLink[i].destination);
+      //SmartX-BPlus-PKS
+      if (pLink[i].destination=='111.68.98.228')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(33.729388, 73.093146);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-GIST
+      if (pLink[i].destination=='103.22.221.170')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(35.159545, 126.852601);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-TEST
+      if (pLink[i].destination=='103.22.221.31')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(37.566535, 126.977969);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-MYREN
+      if (pLink[i].destination=='103.26.47.228')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(2.879037, 101.681900);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-MY
+      if (pLink[i].destination=='203.80.21.4')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(5.973038, 102.205811);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-VN
+      if (pLink[i].destination=='203.191.48.228')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(21.027764, 105.83416);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-TH
+      if (pLink[i].destination=='161.200.25.99')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(13.756331, 100.501765);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-PH
+      if (pLink[i].destination=='202.90.150.4')
+      {
+      console.log(pLink[i].status);
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(14.599512, 120.984219);
+      var pointList = [pointA, pointB];
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      //SmartX-BPlus-ID
+      if (pLink[i].destination=='167.205.51.36')
+      {
+      var pointA = new L.LatLng(36.159545, 129.852601);
+      var pointB = new L.LatLng(-6.208763, 106.845599);
+      var pointList = [pointA, pointB];
+      console.log(pLink[i].status);
+      if (pLink[i].status=='Up')
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'green',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      else
+      {
+      var firstpolyline = new L.Polyline(pointList, {
+      color: 'red',
+      weight: 3,
+      opacity: 0.5,
+      smoothFactor: 1
+      });
+      firstpolyline.addTo(map);
+      }
+      }
+      }
+      }
+
